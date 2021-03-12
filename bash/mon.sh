@@ -4,6 +4,7 @@ DIR=/sys/devices/platform/applesmc.768
 
 function fan3Controller() {
 	SENSOR=temp30
+	FAN=fan3
 
 	THRESHOLDS=(
 		[25000]=1000
@@ -27,17 +28,22 @@ function fan3Controller() {
 	while sleep 5
 	do
 		read READING <$DIR/${SENSOR}_input
-		echo fan3: $(($READING/5000*5000))
+		read CURRENT_FAN_SPEED <$DIR/${FAN}_min
+		SUGGESTED_FAN_SPEED=${THRESHOLDS[$(($READING/5000*5000))]}
 
-		FAN_SPEED=${THRESHOLDS[$(($READING/5000*5000))]}
-
-		echo $FAN_SPEED > /sys/devices/platform/applesmc.768/fan3_min
+		if [ $SUGGESTED_FAN_SPEED -lt $CURRENT_FAN_SPEED ]
+		then
+			SUGGESTED_FAN_SPEED=${THRESHOLDS[$((($READING+2500)/5000*5000))]}
+		fi
+		echo "${FAN}: $READING - $SUGGESTED_FAN_SPEED"
+		echo $SUGGESTED_FAN_SPEED > /sys/devices/platform/applesmc.768/${FAN}_min
 	done
 }
 
 
 function fan2Controller() {
 	SENSOR=temp31
+	FAN=fan2
 
 	THRESHOLDS=(
 		[20000]=1000
@@ -59,17 +65,21 @@ function fan2Controller() {
 	while sleep 5
 	do
 		read READING <$DIR/${SENSOR}_input
-		echo $READING 
-		echo fan2: $(($READING/5000*5000))
+		read CURRENT_FAN_SPEED <$DIR/${FAN}_min
+		SUGGESTED_FAN_SPEED=${THRESHOLDS[$(($READING/5000*5000))]}
 
-		FAN_SPEED=${THRESHOLDS[$(($READING/5000*5000))]}
-
-		echo $FAN_SPEED > /sys/devices/platform/applesmc.768/fan2_min
+		if [ $SUGGESTED_FAN_SPEED -lt $CURRENT_FAN_SPEED ]
+		then
+			SUGGESTED_FAN_SPEED=${THRESHOLDS[$((($READING+2500)/5000*5000))]}
+		fi
+		echo "${FAN}: $READING - $SUGGESTED_FAN_SPEED"
+		echo $SUGGESTED_FAN_SPEED > /sys/devices/platform/applesmc.768/${FAN}_min
 	done
 }
 
 function fan1Controller() {
 	SENSOR=temp21
+	FAN=fan1
 
 	THRESHOLDS=(
 		[30000]=1000
@@ -89,12 +99,15 @@ function fan1Controller() {
 	while sleep 5
 	do
 		read READING <$DIR/${SENSOR}_input
-		echo $READING 
-		echo fan1: $(($READING/5000*5000))
+		read CURRENT_FAN_SPEED <$DIR/${FAN}_min
+		SUGGESTED_FAN_SPEED=${THRESHOLDS[$(($READING/5000*5000))]}
 
-		FAN_SPEED=${THRESHOLDS[$(($READING/5000*5000))]}
-
-		echo $FAN_SPEED > /sys/devices/platform/applesmc.768/fan1_min
+		if [ $SUGGESTED_FAN_SPEED -lt $CURRENT_FAN_SPEED ]
+		then
+			SUGGESTED_FAN_SPEED=${THRESHOLDS[$((($READING+2500)/5000*5000))]}
+		fi
+		echo "${FAN}: $READING - $SUGGESTED_FAN_SPEED"
+		echo $SUGGESTED_FAN_SPEED > /sys/devices/platform/applesmc.768/${FAN}_min
 	done
 }
 
