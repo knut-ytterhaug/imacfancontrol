@@ -2,7 +2,12 @@
 
 Never meant to be a real thing. I own a 2009 imac that seems to have been forgotten by other fan control software for linux as it has 3 fans and not 1 or 2 as more recent versions of imac or other apple computers.
 
-
+I will assume that the labels for the fans are correct:
+```
+fan1_label ODD 
+fan2_label HDD 
+fan3_label CPU 
+```
 
 Trying to figure out where and which of the sensors are most significant for each fan. Fan2 seems to be the HDD fan, but I don't have any internal HDD running in my imac (as a very cheap repair I disconnected the power to the internal HDD and attached a USB drive to the back of the case). The fan does have an impact for other sensors though. I am also missing data from sensor `TN0D`, originally I assumed this was the sensor in the HDD, but according to the list attached it is `Northbridge Die`.
 
