@@ -9,7 +9,43 @@ fan2_label HDD
 fan3_label CPU 
 ```
 
-Trying to figure out where and which of the sensors are most significant for each fan. Fan2 seems to be the HDD fan, but I don't have any internal HDD running in my imac (as a very cheap repair I disconnected the power to the internal HDD and attached a USB drive to the back of the case). The fan does have an impact for other sensors though. I am also missing data from sensor `TN0D`, originally I assumed this was the sensor in the HDD, but according to the list attached it is `Northbridge Die`.
+CPU core sensors are working and reporting well, however since this imac is quite old various of the additional sensors are not reporting any data. I don't know if they ever reported anything as I never had any reason to inspect them before.
+
+```
+temp1_label TA0P   Airflow proximity
+temp2_label TA0p   Airtflow proximity
+temp3_label TA1v
+temp4_label TC0C   Broken
+temp5_label TC0D   Broken
+temp6_label TC0H   CPU 1 Heatsink
+temp7_label TG0D   GPU Die
+temp8_label TG0H   GPU Heatsink
+temp9_label TG0p   GPU Proximity
+temp10_label TH0O
+temp11_label TH1O
+temp12_label TL0P
+temp13_label TL0V
+temp14_label TL0p
+temp15_label TL1V
+temp16_label TL2V
+temp17_label TLAV
+temp18_label TLBV
+temp19_label TLCV
+temp20_label TN0D  Broken
+temp21_label TN0H
+temp22_label TN0P
+temp23_label TO0P
+temp24_label TO0p
+temp25_label TS0V  Broken
+temp26_label TS2V
+temp27_label Tm0P
+temp28_label Tm0p
+temp29_label Tp1P
+temp30_label Tp2H
+temp31_label Tp3H
+```
+
+Trying to figure out where and which of the sensors are most significant for each fan. Fan2 seems to be the HDD fan, but I don't have any internal HDD running in my imac (as a very cheap repair I disconnected the power to the internal HDD and attached a USB drive to the back of the case). The fan does have an impact for other sensors though. I am also missing data from sensor `TN0D`, originally I assumed this was the sensor in the HDD, but according to the following list it is `Northbridge Die`.
 
 https://web.archive.org/web/20160525201657/http://jbot-42.github.io:80/Articles/smc.html
 
