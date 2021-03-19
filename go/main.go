@@ -10,6 +10,10 @@ import (
 
 func main() {
 
+	sensors := sensor{sensorInterface: &sensorReader{}}
+
+	fmt.Println(sensors.ReadValue())
+
 	f, err := os.Open("/sys/devices/platform/applesmc.768/temp31_input")
 
 	if err != nil {
