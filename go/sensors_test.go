@@ -5,17 +5,22 @@ import (
 	"testing"
 )
 
-type sensorMockReader struct {
-}
+//go:generate go-mockgen -f github.com/example/package -i ExampleInterface -o mock_example_interface_test.go
 
-func (s *sensorMockReader) ReadValue() int64 {
-	return int64(1)
+type sensorMockReader struct {
+	ReadValue func(string) int64
 }
 
 func TestReadValue(t *testing.T) {
 
-	sensors := sensor{sensorInterface: &sensorMockReader{}}
+	sensors := sensor{}
+
+	values := make(chan string, 3)
+	values <- "foo"
+	values <- "bar"
+	values <- "baz"
 
 	fmt.Println(sensors.ReadValue())
+	sensors.ReadValue = func(key string) int64 { return int64(1) }
 
 }

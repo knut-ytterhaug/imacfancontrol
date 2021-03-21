@@ -10,7 +10,7 @@ import (
 
 func main() {
 
-	sensors := sensor{sensorInterface: &sensorReader{}}
+	sensors := sensor{}
 
 	fmt.Println(sensors.ReadValue())
 
