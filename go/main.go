@@ -10,9 +10,12 @@ import (
 
 func main() {
 
-	sensors := sensor{}
+	sensors := NewSensor()
 
-	fmt.Println(sensors.ReadValue())
+	fmt.Println(sensors)
+	for _, a := range *sensors {
+		fmt.Println(a.ReadValue())
+	}
 
 	f, err := os.Open("/sys/devices/platform/applesmc.768/temp31_input")
 

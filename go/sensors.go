@@ -25,3 +25,19 @@ func (s *sensor) ReadValue() int64 {
 	fmt.Println("READ THAT STUFF")
 	return int64(20400)
 }
+
+func (s *sensor) Daemon(chan *input) {
+	fmt.Println(input)
+}
+
+func NewSensor() *[]sensor {
+	sensor := &[]sensor{
+		{
+			path: "yeah",
+		},
+		{
+			path: "asdf",
+		},
+	}
+	return sensor
+}
