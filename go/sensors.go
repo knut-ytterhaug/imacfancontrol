@@ -12,32 +12,54 @@ type sensorInterface interface {
 type sensor struct {
 	path   string
 	name   string
-	values struct {
-		timestamp time.Time
-		value     int64
-	}
+	values []*sensorValue
+}
+
+type sensorValue struct {
+	timestamp time.Time
+	value     int64
 }
 
 type sensorReader struct {
 }
 
 func (s *sensor) ReadValue() int64 {
-	fmt.Println("READ THAT STUFF")
 	return int64(20400)
 }
 
-func (s *sensor) Daemon(chan *input) {
-	fmt.Println(input)
+func (s *sensor) StoreReading(input sensorReading) {
+	s.values = append(
+		s.values[1:],
+		&sensorValue{
+			timestamp: time.Now(),
+			value:     input.value.value,
+		},
+	)
+	fmt.Println(s.values)
 }
 
-func NewSensor() *[]sensor {
-	sensor := &[]sensor{
-		{
-			path: "yeah",
-		},
-		{
-			path: "asdf",
-		},
+func NewSensor() *sensor {
+	var values []*sensorValue
+	for v := 0; v < 4; v++ {
+		values = append(values, &sensorValue{value: int64(0)})
+	}
+	sensor := &sensor{
+		path:   "yeah",
+		name:   "somename",
+		values: values,
 	}
 	return sensor
+}
+
+type sensorReading struct {
+	name  string
+	value sensorValue
+}
+
+func (s *sensor) Daemon(input chan sensorReading) {
+	for {
+		reading := <-input
+		s.StoreReading(reading)
+	}
+	close(input)
 }
