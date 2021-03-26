@@ -19,33 +19,16 @@ func TestReadValue(t *testing.T) {
 
 	go sensor.Daemon(values)
 
-	values <- sensorReading{
-		name: "foo",
-		value: sensorValue{
-			value:     int64(1),
-			timestamp: time.Now()},
+	for i := 0; i < 20; i++ {
+		values <- sensorReading{
+			value: sensorValue{
+				value:     int64(10),
+				timestamp: time.Now(),
+			},
+		}
 	}
-	values <- sensorReading{
-		name: "foo",
-		value: sensorValue{
-			value:     int64(1),
-			timestamp: time.Now()},
-	}
-	values <- sensorReading{
-		name: "foo",
-		value: sensorValue{
-			value:     int64(1),
-			timestamp: time.Now()},
-	}
-	values <- sensorReading{
-		name: "foo",
-		value: sensorValue{
-			value:     int64(1),
-			timestamp: time.Now()},
-	}
+
 	time.Sleep(1 * time.Second)
-	fmt.Println(sensor.values)
-	fmt.Println("OMFG")
-	//sensors.ReadValue = func(key string) int64 { return int64(1) }
+	fmt.Println(sensor.GetAverageValue())
 
 }

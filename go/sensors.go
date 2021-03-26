@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -35,7 +34,6 @@ func (s *sensor) StoreReading(input sensorReading) {
 			value:     input.value.value,
 		},
 	)
-	fmt.Println(s.values)
 }
 
 func NewSensor() *sensor {
@@ -62,4 +60,13 @@ func (s *sensor) Daemon(input chan sensorReading) {
 		s.StoreReading(reading)
 	}
 	close(input)
+}
+
+func (s *sensor) GetAverageValue() int64 {
+	var total, count int64
+	for _, v := range s.values {
+		total += v.value
+		count++
+	}
+	return int64(total / count)
 }
