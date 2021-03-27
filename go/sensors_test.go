@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 	"time"
 )
@@ -19,16 +18,18 @@ func TestReadValue(t *testing.T) {
 
 	go sensor.Daemon(values)
 
-	for i := 0; i < 20; i++ {
+	for i := 50000; i < 60000; i += 1000 {
 		values <- sensorReading{
 			value: sensorValue{
-				value:     int64(10),
+				value:     int64(i),
 				timestamp: time.Now(),
 			},
 		}
 	}
 
 	time.Sleep(1 * time.Second)
-	fmt.Println(sensor.GetAverageValue())
+	if r := sensor.GetAverageValue(); r != 57500 {
+		t.Errorf("Average failed. Expected %v, got %v", 57500, r)
+	}
 
 }

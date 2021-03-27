@@ -55,11 +55,11 @@ type sensorReading struct {
 }
 
 func (s *sensor) Daemon(input chan sensorReading) {
+	defer close(input)
 	for {
 		reading := <-input
 		s.StoreReading(reading)
 	}
-	close(input)
 }
 
 func (s *sensor) GetAverageValue() int64 {
