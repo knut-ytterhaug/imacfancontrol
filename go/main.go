@@ -4,11 +4,10 @@ import (
 	"fmt"
 )
 
-// https://gobyexample.com/stateful-goroutines
-
 func main() {
 
-	sensor := NewSensor()
+	sensors := NewSensors()
 
-	fmt.Println(sensor)
+	fmt.Println(sensors)
+
 }
