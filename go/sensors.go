@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type sensors struct {
@@ -14,15 +15,20 @@ func NewSensors() *sensors {
 	var files []string
 
 	root := "/sys/devices/platform/applesmc.768/"
-
+	i := 0
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		files = append(files, path)
-		fmt.Println(path)
+		if strings.HasSuffix(path, "_label") {
+			files = append(files, path)
+			i = i + 1
+			fmt.Println("how many times am I here?", i, path)
+		}
 		return nil
 	})
 	if err != nil {
 		panic(err)
 	}
+
+	print(files)
 
 	sensors := &sensors{
 		sensors: &map[string]*sensor{
